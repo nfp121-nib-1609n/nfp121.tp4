@@ -13,7 +13,7 @@ import java.util.Observer;
  * @author (votre nom)
  * @version (un numéro de version ou une date)
  */
-public class Vue extends JPanel {// à compléter
+public class Vue extends JPanel implements Observer {// à compléter
 
     private JLabel etatPile;
     private PileModele<Integer> pile;

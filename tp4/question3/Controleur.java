@@ -49,13 +49,96 @@ public class Controleur extends JPanel {
     }
 
     public void actualiserInterface() {
-        // à compléter
+        if(pile.estVide()){
+          add.setEnabled(false);
+          sub.setEnabled(false);
+          mul.setEnabled(false);
+          div.setEnabled(false);
+          clear.setEnabled(false);
+          push.setEnabled(true);
+       }
+       else if(pile.taille()== 1){
+          add.setEnabled(false);
+          sub.setEnabled(false);
+          mul.setEnabled(false);
+          div.setEnabled(false);
+          clear.setEnabled(true);
+          push.setEnabled(true);
+        }
+        else if(pile.taille()> 1){
+          add.setEnabled(true);
+          sub.setEnabled(true);
+          mul.setEnabled(true);
+          div.setEnabled(true);
+          clear.setEnabled(true);
+          push.setEnabled(true);
+        }
+        else if(pile.estPleine()) {
+          push.setEnabled(false);
+          add.setEnabled(true);
+          sub.setEnabled(true);
+          mul.setEnabled(true);
+          div.setEnabled(true);
+          clear.setEnabled(true);
+        }
     }
 
     private Integer operande() throws NumberFormatException {
         return Integer.parseInt(donnee.getText());
     }
 
+     public void add(){
+        try{
+            this.pile.empiler(this.pile.depiler() + this.pile.depiler());
+        }catch(Exception e){
+        }
+        this.actualiserInterface();
+        
+    }
+    
+    public void sub(){
+        try{
+            int o = this.pile.sommet();
+            this.pile.depiler();
+            this.pile.empiler(this.pile.depiler() - o);
+            
+        }catch(Exception e){
+        }
+        this.actualiserInterface();
+    }
+    
+     public void mul(){
+        try{
+            this.pile.empiler(this.pile.depiler() * this.pile.depiler());
+        }catch(Exception e){
+        }
+        this.actualiserInterface();
+    }
+    
+    public void div(){
+        try{
+            int o = this.pile.sommet();
+            if(o != 0){
+                this.pile.depiler();
+                this.pile.empiler(this.pile.depiler() / o);
+            }
+            if(o == 0){
+                //on ne fait rien
+            }
+        }catch(Exception e){
+        }
+        this.actualiserInterface();
+    }
+    
+    public void clear(){
+        for(int i = this.pile.taille(); i >=0 ; i--){
+            try{
+                this.pile.depiler();
+            }catch(Exception e){
+            }
+        }
+        this.actualiserInterface();
+    }
     // à compléter
     // en cas d'exception comme division par zéro, 
     // mauvais format de nombre suite à l'appel de la méthode operande
